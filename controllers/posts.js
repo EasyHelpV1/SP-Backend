@@ -10,7 +10,7 @@ const getAllPosts = async (req, res) => {
 
   function search(nameKey, myArray) {
     for (let i = 0; i < myArray.length; i++) {
-      console.log(myArray[i].id, String(nameKey));
+      // console.log(myArray[i].id, String(nameKey));
       if (String(myArray[i].id) === String(nameKey)) {
         return myArray[i];
       }
@@ -29,7 +29,7 @@ const getAllPosts = async (req, res) => {
     return post;
   });
 
-  console.log(mappedPosts);
+  // console.log(mappedPosts);
 
   res.status(StatusCodes.OK).json(mappedPosts);
 };
