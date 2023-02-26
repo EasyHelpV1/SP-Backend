@@ -1,3 +1,4 @@
+/*jshint esversion: 8*/
 const { StatusCodes } = require("http-status-codes");
 const imgModel = require("../models/Img");
 const User = require("../models/User");
@@ -6,7 +7,7 @@ const getOneImg = async (req, res) => {
   const {
     params: { id: imgId },
   } = req;
-  var anImg = await imgModel.findOne({ _id: imgId });
+  const anImg = await imgModel.findOne({ _id: imgId });
   res.status(StatusCodes.OK).json(anImg);
 };
 
@@ -29,7 +30,19 @@ const createImg = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ imgCreated, userUpdate });
 };
 
+const deleteImg = async (req, res) => {
+  const {
+    params: { id: imgId },
+  } = req;
+  const deleteImg = await imgModel.findOneAndRemove({ _id: imgId });
+  console.log(deleteImg);
+  res.status(StatusCodes.OK).send();
+};
+const changeImg = async (req, res) => {};
+
 module.exports = {
   getOneImg,
   createImg,
+  deleteImg,
+  changeImg,
 };

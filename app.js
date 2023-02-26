@@ -21,8 +21,6 @@ const postsRouter = require("./routes/posts");
 const usersRouter = require("./routes/users");
 const imgsRouter = require("./routes/imgs");
 
-const port = process.env.PORT || 5000;
-
 //middleware
 app.use(
   cors({
@@ -33,13 +31,23 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// error handler
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
+
+//docs?
+
 //routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/imgs", imgsRouter);
 app.use("/api/v1/posts", authUser, postsRouter);
 
-//error handeling middleware
+//errors
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 5000;
 
 //start
 const start = async () => {
