@@ -28,6 +28,8 @@ const editUser = async (req, res) => {
     params: { id: userId },
   } = req;
 
+  console.log(userId, req.body);
+
   const user = await User.findOneAndUpdate(
     { _id: userId },
     { $set: req.body },

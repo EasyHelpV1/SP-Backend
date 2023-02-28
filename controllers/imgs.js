@@ -8,6 +8,7 @@ const getOneImg = async (req, res) => {
     params: { id: imgId },
   } = req;
   const anImg = await imgModel.findOne({ _id: imgId });
+  console.log(anImg);
   res.status(StatusCodes.OK).json(anImg);
 };
 
@@ -35,7 +36,6 @@ const deleteImg = async (req, res) => {
     params: { id: imgId },
   } = req;
   const deleteImg = await imgModel.findOneAndRemove({ _id: imgId });
-  console.log(deleteImg);
   res.status(StatusCodes.OK).send();
 };
 const changeImg = async (req, res) => {};

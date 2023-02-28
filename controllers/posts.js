@@ -44,7 +44,23 @@ const getOnePost = async (req, res) => {
 };
 
 const editPost = async (req, res) => {
-  res.send("edit post");
+  // res.send("edit post");
+  const {
+    params: { id: postId },
+  } = req;
+
+  console.log(postId, req.body);
+  const post = await Post.findOneAndUpdate(
+    { _id: postId },
+    { $set: req.body },
+    { new: true, runValidators: true }
+  );
+  if (!post) {
+    throw new NotFoundError(`no post with id ${postId}`);
+  }
+  //make sure that values do not set to empty? or check it on frontend
+  //handle mongodb errors of invalid email
+  res.status(StatusCodes.OK).json(post);
 };
 
 const deletePost = async (req, res) => {
