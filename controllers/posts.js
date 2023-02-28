@@ -1,6 +1,7 @@
 /* jshint esversion: 8*/
 const Post = require("../models/Post");
 const User = require("../models/User");
+const { BadRequestError, NotFoundError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllPosts = async (req, res) => {
@@ -8,28 +9,32 @@ const getAllPosts = async (req, res) => {
 
   const allUsers = await User.find({}, { firstN: 1, lastN: 1 });
 
+  //handle error if user deleted what should we doooo?
   function search(nameKey, myArray) {
     for (let i = 0; i < myArray.length; i++) {
-      console.log(myArray[i].id, String(nameKey));
       if (String(myArray[i].id) === String(nameKey)) {
         return myArray[i];
       }
     }
   }
 
+  //map user to post, if user does not exist, skip post
   var varPosts = allPosts.slice();
-
-  const mappedPosts = varPosts.map((post) => {
-    let userId = post.createdBy;
-    let user = search(userId, allUsers);
-    // console.log(user);
-    let userFN = user.firstN;
-    let userLN = user.lastN;
-    post.authorName = `${userFN + " " + userLN}`;
-    return post;
-  });
-
-  console.log(mappedPosts);
+  var mappedPosts = varPosts
+    .filter(function (post) {
+      if (!search(post.createdBy, allUsers)) {
+        return false; // skip
+      }
+      return true;
+    })
+    .map(function (post) {
+      let userId = post.createdBy;
+      let user = search(userId, allUsers);
+      let userFN = user.firstN;
+      let userLN = user.lastN;
+      post.authorName = `${userFN + " " + userLN}`;
+      return post;
+    });
 
   res.status(StatusCodes.OK).json(mappedPosts);
 };
@@ -39,7 +44,23 @@ const getOnePost = async (req, res) => {
 };
 
 const editPost = async (req, res) => {
-  res.send("edit post");
+  // res.send("edit post");
+  const {
+    params: { id: postId },
+  } = req;
+
+  console.log(postId, req.body);
+  const post = await Post.findOneAndUpdate(
+    { _id: postId },
+    { $set: req.body },
+    { new: true, runValidators: true }
+  );
+  if (!post) {
+    throw new NotFoundError(`no post with id ${postId}`);
+  }
+  //make sure that values do not set to empty? or check it on frontend
+  //handle mongodb errors of invalid email
+  res.status(StatusCodes.OK).json(post);
 };
 
 const deletePost = async (req, res) => {

@@ -1,4 +1,6 @@
+/*jshint esversion: 8*/
 const User = require("../models/User");
+const { BadRequestError, UnauthenticatedError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
 const register = async (req, res) => {
@@ -10,29 +12,22 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  // if (!email || !password) {
-  //   // handle error
-  //   res
-  //     .status(StatusCodes.BAD_REQUEST)
-  //     .json({ msg: "email or password missing" });
-  // }
-
-  console.log(email);
+  if (!email || !password) {
+    throw new BadRequestError("Please provide email and password");
+  }
 
   const user = await User.findOne({ email });
 
-  // if (!user) {
-  //   //handle error
-  //   res.status(StatusCodes.UNAUTHORIZED).json({ msg: "user not found" });
-  // }
+  if (!user) {
+    throw new UnauthenticatedError("Incorrect email");
+  }
 
   const verified = await user.verifyPassword(password);
 
-  // if (!verified) {
-  //   //handle error
-  //   res.status(StatusCodes.UNAUTHORIZED).json({ msg: "wrong password" });
-  // }
-  console.log(user);
+  if (!verified) {
+    //handle error
+    throw new UnauthenticatedError("Incorrect password");
+  }
 
   const token = user.createJWT();
 

@@ -1,5 +1,6 @@
-const Post = require("../models/Post");
+/*jshint esversion: 8*/
 const User = require("../models/User");
+const { BadRequestError, NotFoundError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllUsers = async (req, res) => {
@@ -15,30 +16,66 @@ const getOneUser = async (req, res) => {
     _id: userId,
   });
   // return not found error if user does not exist
+  if (!user) {
+    throw new NotFoundError(`no user with id ${userId}`);
+  }
   res.status(StatusCodes.OK).json(user);
 };
 
+//not for changing password
 const editUser = async (req, res) => {
   const {
-    body: { firstN, lastN, email, phone, password },
     params: { id: userId },
   } = req;
 
-  if (firstN === "" || lastN === "" || email === "" || password === "") {
-    // throw new BadRequuestError("First name, last name, and email connot be empty")
-    console.log("First name, last name, and email connot be empty");
-  }
+  console.log(userId, req.body);
 
-  const user = await User.findOneAndUpdate({ _id: userId }, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const user = await User.findOneAndUpdate(
+    { _id: userId },
+    { $set: req.body },
+    { new: true, runValidators: true }
+  );
   // return not found error if user does not exist
+  if (!user) {
+    throw new NotFoundError(`no user with id ${userId}`);
+  }
+  //make sure that values do not set to empty? or check it on frontend
+  //handle mongodb errors of invalid email
   res.status(StatusCodes.OK).json(user);
 };
 
 const deleteUser = async (req, res) => {
-  res.send("delete user");
+  const {
+    params: { id: userId },
+  } = req;
+  const user = await User.findOneAndRemove({ _id: userId });
+  if (!user) {
+    throw new NotFoundError(`no user with id ${userId}`);
+  }
+  res.status(StatusCodes.OK).send(`user ${userId} deleted`);
+};
+
+const editPassword = async (req, res) => {
+  const {
+    params: { id: userId },
+    body: { oldPassword, newPassword },
+  } = req;
+  const userVerify = await User.findOne({ _id: userId });
+  // return not found error if user does not exist
+  if (!userVerify) {
+    throw new NotFoundError(`no user with id ${userId}`);
+  }
+  const verified = await userVerify.verifyPassword(oldPassword);
+  if (!verified) {
+    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "wrong old password" });
+  }
+  const user = await User.updateOne(
+    { _id: userId },
+    { $set: { password: newPassword } },
+    { new: true, runValidators: true }
+  );
+  //handle mongodb errors of invalid email
+  res.status(StatusCodes.OK).json(user);
 };
 
 module.exports = {
@@ -46,4 +83,5 @@ module.exports = {
   getOneUser,
   editUser,
   deleteUser,
+  editPassword,
 };
