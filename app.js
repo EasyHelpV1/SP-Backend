@@ -20,6 +20,7 @@ const authRouter = require("./routes/auth");
 const postsRouter = require("./routes/posts");
 const usersRouter = require("./routes/users");
 const imgsRouter = require("./routes/imgs");
+const commentRouter = require("./routes/comment");
 
 //middleware
 app.use(
@@ -41,6 +42,7 @@ app.use(bodyParser.json());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/imgs", imgsRouter);
+app.use("/api/v1/comment", commentRouter);
 app.use("/api/v1/posts", authUser, postsRouter);
 
 // //errors

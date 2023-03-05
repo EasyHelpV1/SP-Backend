@@ -12,14 +12,6 @@ const PostSchema = new mongoose.Schema(
       required: [true, "please provide post content"],
       maxlength: 200,
     },
-    // location: {
-    //   type: String,
-    //   required: [true, "please provide location"],
-    // },
-    // time: {
-    //   type: String,
-    //   required: [true, "please provide time"],
-    // },
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",
@@ -30,10 +22,16 @@ const PostSchema = new mongoose.Schema(
       require: [true, "please provide author name"],
       maxlength: 50,
     },
-    replies: {
-      type: Array,
-      default: [],
-    },
+    // comments: {
+    //   type: Array,
+    //   default: [],
+    // },
+    comments: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   { timestamps: true }
 );
