@@ -39,10 +39,13 @@ app.use(bodyParser.json());
 //docs?
 
 //routes
+app.get("/api/v1", (req, res) => {
+  return res.send("Welcome home :)");
+});
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", usersRouter);
-app.use("/api/v1/imgs", imgsRouter);
-app.use("/api/v1/comment", commentRouter);
+app.use("/api/v1/users", authUser, usersRouter);
+app.use("/api/v1/imgs", authUser, imgsRouter);
+app.use("/api/v1/comment", authUser, commentRouter);
 app.use("/api/v1/posts", authUser, postsRouter);
 
 // //errors
