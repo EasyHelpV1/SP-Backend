@@ -19,7 +19,7 @@ const PostSchema = new mongoose.Schema(
     },
     authorName: {
       type: String,
-      require: [true, "please provide author name"],
+      // required: [true, "please provide author name"],
       maxlength: 50,
     },
     // comments: {

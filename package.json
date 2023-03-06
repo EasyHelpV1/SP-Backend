@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha 'tests/**/*.js'",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "testwatch": "nodemon --exec \"mocha --recursive\""
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,9 @@
     "socket.io": "^4.6.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "nodemon": "^2.0.20",
+    "supertest": "^6.3.3"
   }
 }

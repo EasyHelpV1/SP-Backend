@@ -7,6 +7,7 @@ const cors = require("cors");
 var bodyParser = require("body-parser");
 var imgModel = require("./models/Img");
 const express = require("express");
+
 const app = express();
 
 //connect to db
@@ -68,5 +69,4 @@ const start = async () => {
 
 start();
 
-// make folder for errors
-// error handeler middleware
+module.exports = app;

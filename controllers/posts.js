@@ -55,13 +55,20 @@ const getAllPosts = async (req, res) => {
 };
 
 const getOnePost = async (req, res) => {
-  res.send("get post");
+  const postId = req.params.id;
+
+  const post = await Post.findOne({ _id: postId });
+
+  if (!post) {
+    throw new NotFoundError(`no user with id ${postId}`);
+  }
+  res.status(StatusCodes.OK).json(post);
 };
 
 const editPost = async (req, res) => {
   const postId = req.params.id;
 
-  const post = await User.findOneAndUpdate(
+  const post = await Post.findOneAndUpdate(
     { _id: postId },
     { $set: req.body },
     { new: true, runValidators: true }
@@ -71,46 +78,15 @@ const editPost = async (req, res) => {
     throw new NotFoundError(`no user with id ${postId}`);
   }
   res.status(StatusCodes.OK).json(post);
-
-  // // get post id
-  // const postId = req.params.id;
-  // // get comment details, postid so we can connect them
-  // const comment = new Comment({
-  //   content: req.body.comment,
-  //   post: postId,
-  //   createdBy: req.body.userId,
-  // });
-  // // save comment
-  // await comment.save();
-  // // find post and add new comment using push
-  // const postUpdate = await Post.findById(postId);
-  // postUpdate.comments.push(comment);
-  // // update post and save it, console err id any
-  // await postUpdate.save(function (err) {
-  //   if (err) {
-  //     console.log(err);
-  //   }
-  //   // res.redirect('/')
-  // });
-
-  // res.status(StatusCodes.OK).json(postUpdate);
 };
 
-// // console.log(postId, req.body);
-// const post = await Post.findOneAndUpdate(
-//   { _id: postId },
-//   { $set: req.body },
-//   { new: true, runValidators: true }
-// );
-// if (!post) {
-//   throw new NotFoundError(`no post with id ${postId}`);
-// }
-// //make sure that values do not set to empty? or check it on frontend
-// //handle mongodb errors of invalid email
-// res.status(StatusCodes.OK).json(post);
-
 const deletePost = async (req, res) => {
-  res.send("delete post");
+  const postId = req.params.id;
+  const post = await Post.findOneAndRemove({ _id: postId });
+  if (!post) {
+    throw new NotFoundError(`no user with id ${postId}`);
+  }
+  res.status(StatusCodes.ACCEPTED).json({ message: `post ${postId} deleted` });
 };
 
 const createPost = async (req, res) => {
