@@ -4,7 +4,7 @@ const { BadRequestError, NotFoundError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllUsers = async (req, res) => {
-  const users = User.find();
+  const users = await User.find({});
   res.status(StatusCodes.OK).json(users);
 };
 
@@ -52,7 +52,7 @@ const deleteUser = async (req, res) => {
   if (!user) {
     throw new NotFoundError(`no user with id ${userId}`);
   }
-  res.status(StatusCodes.OK).send(`user ${userId} deleted`);
+  res.status(StatusCodes.ACCEPTED).json({ message: `user ${userId} deleted` });
 };
 
 const editPassword = async (req, res) => {
