@@ -33,9 +33,9 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// // error handler
-// const notFoundMiddleware = require("./middleware/not-found");
-// const errorHandlerMiddleware = require("./middleware/error-handler");
+// error handler
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //docs?
 
@@ -49,9 +49,9 @@ app.use("/api/v1/imgs", authUser, imgsRouter);
 app.use("/api/v1/comment", authUser, commentRouter);
 app.use("/api/v1/posts", authUser, postsRouter);
 
-// //errors
-// app.use(notFoundMiddleware);
-// app.use(errorHandlerMiddleware);
+//errors
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
 

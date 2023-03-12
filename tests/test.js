@@ -9,6 +9,10 @@ const server = require("../app");
 const Post = require("../models/Post");
 chai.use(chaiHttp);
 
+//code coverage backend vs frintend
+// by 1st week after break : have all features
+// documentiation: user, internal developer (work on project), external developer (use api)
+
 let token;
 let userId;
 let postId;

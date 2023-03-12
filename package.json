@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha 'tests/**/*.js'",
+    "test": "mocha 'tests/**/*.js' --timeout 10000",
     "start": "nodemon app.js",
     "testwatch": "nodemon --exec \"mocha --recursive\""
   },

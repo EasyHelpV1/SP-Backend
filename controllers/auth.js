@@ -6,7 +6,7 @@ const { StatusCodes } = require("http-status-codes");
 const register = async (req, res) => {
   const user = await User.create({ ...req.body });
   const token = user.createJWT();
-  res.status(StatusCodes.CREATED).json({ user, token });
+  res.status(StatusCodes.CREATED).json({ user: { _id: user._id }, token });
 };
 
 const login = async (req, res) => {
@@ -31,7 +31,10 @@ const login = async (req, res) => {
 
   const token = user.createJWT();
 
-  res.status(StatusCodes.OK).json({ user, token });
+  res.status(StatusCodes.OK).json({
+    user: { _id: user._id },
+    token,
+  });
 };
 
 module.exports = {
