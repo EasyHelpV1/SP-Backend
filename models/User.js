@@ -29,11 +29,11 @@ const UserSchema = new mongoose.Schema({
     ],
     unique: true,
   },
-  // verifiedEmail: {
-  //   type: Boolean,
-  //   default: false,
-  //   required: true,
-  // },
+  verifiedEmail: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   phone: {
     type: String,
     match: [/^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/],
@@ -43,9 +43,6 @@ const UserSchema = new mongoose.Schema({
     required: [true, "please provide a password"],
     minlength: 6,
   },
-  // userImg: {
-  //   type: Buffer, // casted to MongoDB's BSON type: binData
-  // },
   userImg: {
     type: mongoose.Types.ObjectId,
     ref: "Img",
@@ -68,7 +65,7 @@ UserSchema.pre("updateOne", async function (next) {
 
 UserSchema.methods.createJWT = function () {
   return jwt.sign(
-    { userId: this._id, name: this.name },
+    { userId: this._id, name: this.firstN + this.lastN },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_LIFETIME,
@@ -76,8 +73,20 @@ UserSchema.methods.createJWT = function () {
   );
 };
 
+UserSchema.methods.emailToken = function () {
+  return jwt.sign(
+    { userId: this._id, name: this.firstN + this.lastN },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+};
+
 UserSchema.methods.verifyPassword = async function (givenPassword) {
   const verified = await bcrypt.compare(givenPassword, this.password);
+  return verified;
+};
+UserSchema.methods.verifyToken = async function (givenToken) {
+  const verified = jwt.verify(givenToken, process.env.JWT_SECRET);
   return verified;
 };
 

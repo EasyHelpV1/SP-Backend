@@ -25,6 +25,10 @@ const io = new socketio.Server(server, {
   }),
 });
 
+io.on("connection", (socket) => {
+  console.log("connected to socket.io ");
+});
+
 //connect to db
 const db = require("./db/connect");
 
