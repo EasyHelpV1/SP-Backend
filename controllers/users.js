@@ -1,6 +1,10 @@
 /*jshint esversion: 8*/
 const User = require("../models/User");
-const { BadRequestError, NotFoundError } = require("../errors");
+const {
+  BadRequestError,
+  NotFoundError,
+  UnauthenticatedError,
+} = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllUsers = async (req, res) => {
@@ -67,7 +71,7 @@ const editPassword = async (req, res) => {
   }
   const verified = await userVerify.verifyPassword(oldPassword);
   if (!verified) {
-    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "wrong old password" });
+    throw new UnauthenticatedError("Incorrect old password");
   }
   const user = await User.updateOne(
     { _id: userId },

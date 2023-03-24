@@ -8,7 +8,10 @@ const getOneImg = async (req, res) => {
     params: { id: imgId },
   } = req;
   const anImg = await imgModel.findOne({ _id: imgId });
-  console.log(anImg);
+  console.log(imgId);
+  if (!anImg) {
+    throw new NotFoundError(`no image with id ${imgId}`);
+  }
   res.status(StatusCodes.OK).json(anImg);
 };
 
@@ -36,7 +39,7 @@ const deleteImg = async (req, res) => {
     params: { id: imgId },
   } = req;
   const deleteImg = await imgModel.findOneAndRemove({ _id: imgId });
-  res.status(StatusCodes.OK).send();
+  res.status(StatusCodes.OK).json({});
 };
 const changeImg = async (req, res) => {};
 

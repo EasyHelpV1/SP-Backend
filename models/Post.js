@@ -10,7 +10,8 @@ const PostSchema = new mongoose.Schema(
     content: {
       type: String,
       required: [true, "please provide post content"],
-      maxlength: 200,
+      minlength: 50,
+      maxlength: 1000,
     },
     createdBy: {
       type: mongoose.Types.ObjectId,
@@ -19,13 +20,8 @@ const PostSchema = new mongoose.Schema(
     },
     authorName: {
       type: String,
-      // required: [true, "please provide author name"],
       maxlength: 50,
     },
-    // comments: {
-    //   type: Array,
-    //   default: [],
-    // },
     comments: [
       {
         type: mongoose.Types.ObjectId,
