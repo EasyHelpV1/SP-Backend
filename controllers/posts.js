@@ -39,6 +39,7 @@ const getAllPosts = async (req, res) => {
 
   // this method does not handle the case of a deleted user, the last one does.
   // should we keep this, and just deleted posts made by a user when that user is deleted
+
   const mappedPosts = await Post.aggregate([
     {
       $lookup: {

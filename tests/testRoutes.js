@@ -1,17 +1,17 @@
 /*jshint esversion: 8*/
-process.env.NODE_ENV = "test";
+require("dotenv").config({ path: `.env.test` });
 const chai = require("chai");
 const expect = chai.expect;
 const should = chai.should();
+
 const chaiHttp = require("chai-http");
 const request = require("supertest");
-const server = require("../app");
-const Post = require("../models/Post");
-chai.use(chaiHttp);
 
-//code coverage backend vs frintend
-// by 1st week after break : have all features
-// documentiation: user, internal developer (work on project), external developer (use api)
+const server = require("../app");
+
+const Post = require("../models/Post");
+
+chai.use(chaiHttp);
 
 let token;
 let userId;
@@ -19,8 +19,8 @@ let postId;
 let testUserId;
 
 const defaultUser = {
-  email: "abc@gmail.com",
-  password: "newsecret",
+  email: "testlogin@gmail.com",
+  password: process.env.VALID_PASS,
 };
 const registerUserInfo = {
   firstN: "TestUser",

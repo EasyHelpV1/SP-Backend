@@ -29,6 +29,11 @@ const UserSchema = new mongoose.Schema({
     ],
     unique: true,
   },
+  // verifiedEmail: {
+  //   type: Boolean,
+  //   default: false,
+  //   required: true,
+  // },
   phone: {
     type: String,
     match: [/^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/],

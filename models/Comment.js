@@ -6,13 +6,14 @@ const CommentSchema = new mongoose.Schema(
     content: {
       type: String,
       required: [true, "please provide comment content"],
-      minkength: 50,
-      maxlength: 200,
+      maxlength: 500,
     },
-    replies: {
-      type: Array,
-      default: [],
-    },
+    replies: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Reply",
+      },
+    ],
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",
@@ -21,6 +22,7 @@ const CommentSchema = new mongoose.Schema(
     post: {
       type: mongoose.Types.ObjectId,
       ref: "Post",
+      required: [true, "please provide post"],
     },
   },
   { timestamps: true }
