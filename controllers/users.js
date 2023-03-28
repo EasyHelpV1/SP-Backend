@@ -19,7 +19,6 @@ const getOneUser = async (req, res) => {
   const user = await User.findOne({
     _id: userId,
   });
-  // return not found error if user does not exist
   if (!user) {
     throw new NotFoundError(`no user with id ${userId}`);
   }
@@ -32,7 +31,7 @@ const editUser = async (req, res) => {
     params: { id: userId },
   } = req;
 
-  console.log(userId, req.body);
+  // console.log(userId, req.body);
 
   const user = await User.findOneAndUpdate(
     { _id: userId },

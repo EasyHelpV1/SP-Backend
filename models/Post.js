@@ -13,6 +13,19 @@ const PostSchema = new mongoose.Schema(
       minlength: 50,
       maxlength: 1000,
     },
+    money: {
+      type: String,
+      enum: ["paid", "unpaid"],
+      required: [true, "please provide paid or not"],
+    },
+    time: {
+      type: String,
+      required: [true, "please provide estimated time"],
+    },
+    urgency: {
+      type: Boolean,
+      required: [true, "please provide urgent or not"],
+    },
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",

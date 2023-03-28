@@ -17,17 +17,17 @@ const app = express();
 // wrap with http server
 const server = http.createServer(app);
 
-// initialize socketio
-const io = new socketio.Server(server, {
-  pingTimeout: 60000,
-  cors: cors({
-    origin: "*",
-  }),
-});
+// // initialize socketio
+// const io = new socketio.Server(server, {
+//   pingTimeout: 60000,
+//   cors: cors({
+//     origin: "*",
+//   }),
+// });
 
-io.on("connection", (socket) => {
-  console.log("connected to socket.io ");
-});
+// io.on("connection", (socket) => {
+//   console.log("connected to socket.io ");
+// });
 
 //connect to db
 const db = require("./db/connect");

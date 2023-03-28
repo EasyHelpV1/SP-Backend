@@ -26,7 +26,7 @@ const getOneReply = async (req, res) => {
       },
     },
   ]);
-  console.log(reply);
+  // console.log(reply);
 
   if (!reply) {
     throw new NotFoundError(`no reply with id ${replyId}`);

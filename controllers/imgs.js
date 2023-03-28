@@ -8,7 +8,7 @@ const getOneImg = async (req, res) => {
     params: { id: imgId },
   } = req;
   const anImg = await imgModel.findOne({ _id: imgId });
-  console.log(imgId);
+  // console.log(imgId);
   if (!anImg) {
     throw new NotFoundError(`no image with id ${imgId}`);
   }
@@ -26,7 +26,7 @@ const createImg = async (req, res) => {
     _id: userId,
   });
   getUser.userImg = imgCreated;
-  console.log(getUser);
+  // console.log(getUser);
   const userUpdate = await User.findOneAndUpdate({ _id: userId }, getUser, {
     new: true,
     runValidators: true,
