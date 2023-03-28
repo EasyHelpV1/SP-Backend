@@ -25,7 +25,6 @@ const getOneComment = async (req, res) => {
       },
     },
   ]);
-  console.log(comment);
 
   if (!comment) {
     throw new NotFoundError(`no comment with id ${commentId}`);

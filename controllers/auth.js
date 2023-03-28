@@ -59,7 +59,7 @@ const confirm = async (req, res) => {
     { verifiedEmail: true },
     { new: true, runValidators: true }
   );
-  console.log(verified, confirmIt);
+  // console.log(verified, confirmIt);
   res
     .status(StatusCodes.OK)
     .redirect(`${process.env.LINK_ADDRESS_FRONT}/confirmed`);
