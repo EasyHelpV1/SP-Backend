@@ -13,6 +13,15 @@ const PostSchema = new mongoose.Schema(
       minlength: 50,
       maxlength: 1000,
     },
+    date: {
+      type: Date,
+      required: [true, "please provide date"],
+      trim: true,
+    },
+    location: {
+      type: String,
+      required: [true, "please provide location"],
+    },
     money: {
       type: String,
       enum: ["paid", "unpaid"],

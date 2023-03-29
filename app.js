@@ -42,6 +42,7 @@ const usersRouter = require("./routes/users");
 const imgsRouter = require("./routes/imgs");
 const commentRouter = require("./routes/comment");
 const replyRouter = require("./routes/reply");
+const adminRouter = require("./routes/admin");
 
 //middleware
 app.use(
@@ -69,6 +70,7 @@ app.use("/api/v1/imgs", authUser, imgsRouter);
 app.use("/api/v1/posts", authUser, postsRouter);
 app.use("/api/v1/comment", authUser, commentRouter);
 app.use("/api/v1/reply", authUser, replyRouter);
+app.use("/api/v1/admin", authUser, adminRouter);
 
 //errors
 app.use(notFoundMiddleware);
