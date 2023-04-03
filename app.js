@@ -34,6 +34,7 @@ const db = require("./db/connect");
 
 //auth
 const authUser = require("./middleware/auth");
+const authAdmin = require("./middleware/adminAuth");
 
 //routers
 const authRouter = require("./routes/auth");
@@ -70,7 +71,7 @@ app.use("/api/v1/imgs", authUser, imgsRouter);
 app.use("/api/v1/posts", authUser, postsRouter);
 app.use("/api/v1/comment", authUser, commentRouter);
 app.use("/api/v1/reply", authUser, replyRouter);
-app.use("/api/v1/admin", authUser, adminRouter);
+app.use("/api/v1/admin", authAdmin, adminRouter);
 
 //errors
 app.use(notFoundMiddleware);
