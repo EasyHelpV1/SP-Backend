@@ -1,5 +1,6 @@
 /*jshint esversion: 8*/
 const User = require("../models/User");
+const Post = require("../models/Post");
 const {
   BadRequestError,
   NotFoundError,
@@ -26,4 +27,70 @@ const ResetUserPassword = async (req, res) => {
   res.status(StatusCodes.OK).json(user);
 };
 
-module.exports = { ResetUserPassword };
+const deleteUser = async (req, res) => {
+  const {
+    params: { email: userEmail },
+  } = req;
+  const user = await User.findOneAndRemove({ email: userEmail });
+  if (!user) {
+    throw new NotFoundError(`no user with email ${userEmail}`);
+  }
+  res
+    .status(StatusCodes.ACCEPTED)
+    .json({ message: `user ${userEmail} deleted` });
+};
+
+const deletePost = async (req, res) => {
+  const { postTitle, createdBy, content } = req.body;
+
+  const findUserEmail = await User.findOne({ email: createdBy });
+
+  if (!findUserEmail) {
+    throw new NotFoundError(`no user with given email address`);
+  }
+
+  const post = await Post.findOneAndRemove({
+    title: postTitle,
+    createdBy: findUserEmail._id,
+    content: content,
+  });
+  if (!post) {
+    throw new NotFoundError(`no post with given info`);
+  }
+  res.status(StatusCodes.ACCEPTED).json({ message: `post deleted` });
+};
+
+const findUser = async (req, res) => {
+  const userEmail = req.params.email;
+
+  const user = await User.findOne({ email: userEmail });
+  if (!user) {
+    throw new NotFoundError(`No user with email ${userEmail}`);
+  }
+  res.status(StatusCodes.OK).json(user);
+};
+
+//not for changing password
+const editUser = async (req, res) => {
+  const userEmail = req.params.email;
+
+  const user = await User.findOneAndUpdate(
+    { email: userEmail },
+    { $set: req.body },
+    { new: true, runValidators: true }
+  );
+
+  if (!user) {
+    throw new NotFoundError(`no user with email ${userEmail}`);
+  }
+
+  res.status(StatusCodes.OK).json(user);
+};
+
+module.exports = {
+  ResetUserPassword,
+  deleteUser,
+  deletePost,
+  findUser,
+  editUser,
+};

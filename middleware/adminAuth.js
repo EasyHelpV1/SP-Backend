@@ -1,10 +1,9 @@
 /* jshint esversion: 9 */
 /* jshint node: true */
-const User = require("../models/User");
 const { UnauthenticatedError } = require("../errors");
 const jwt = require("jsonwebtoken");
 
-const auth = async (req, res, next) => {
+const adminAuth = async (req, res, next) => {
   // check header
   const authHeader = req.headers.authorization;
   // console.log(authHeader);
@@ -15,6 +14,10 @@ const auth = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (payload.role !== "admin") {
+      throw new UnauthenticatedError("Not an Admin");
+    }
     // attach the user to the routes
     req.user = {
       userId: payload.userId,
@@ -23,8 +26,8 @@ const auth = async (req, res, next) => {
     };
     next();
   } catch (error) {
-    throw new UnauthenticatedError("Authentication invalid");
+    throw new UnauthenticatedError("Authentication invalid: not an admin");
   }
 };
 
-module.exports = auth;
+module.exports = adminAuth;
