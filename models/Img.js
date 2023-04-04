@@ -3,12 +3,6 @@ const mongoose = require("mongoose");
 
 const ImgSchema = new mongoose.Schema(
   {
-    // name: {
-    //   type: String,
-    // },
-    // desc: {
-    //   type: String,
-    // },
     img: {
       type: Buffer, // casted to MongoDB's BSON type: binData
       required: true,

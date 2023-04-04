@@ -87,10 +87,39 @@ const editUser = async (req, res) => {
   res.status(StatusCodes.OK).json(user);
 };
 
+const addAdmin = async (req, res) => {
+  const userEmail = req.params.email;
+
+  const userToAdmin = await User.findOneAndUpdate(
+    { email: userEmail },
+    { $set: { role: "admin" } },
+    { new: true, runValidators: true }
+  );
+  if (!userToAdmin) {
+    throw new NotFoundError(`no user with email ${userEmail}`);
+  }
+  res.status(StatusCodes.OK).json(userToAdmin);
+};
+const removeAdmin = async (req, res) => {
+  const userEmail = req.params.email;
+
+  const adminToUser = await User.findOneAndUpdate(
+    { email: userEmail },
+    { $set: { role: "user" } },
+    { new: true, runValidators: true }
+  );
+  if (!adminToUser) {
+    throw new NotFoundError(`no user with email ${userEmail}`);
+  }
+  res.status(StatusCodes.OK).json(adminToUser);
+};
+
 module.exports = {
   ResetUserPassword,
   deleteUser,
   deletePost,
   findUser,
   editUser,
+  addAdmin,
+  removeAdmin,
 };
