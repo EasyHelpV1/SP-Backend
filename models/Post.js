@@ -10,7 +10,7 @@ const PostSchema = new mongoose.Schema(
     content: {
       type: String,
       required: [true, "please provide post content"],
-      minlength: 25,
+      minlength: 10,
       maxlength: 1000,
     },
     date: {

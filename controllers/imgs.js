@@ -2,6 +2,7 @@
 const { StatusCodes } = require("http-status-codes");
 const imgModel = require("../models/Img");
 const User = require("../models/User");
+const { BadRequestError, NotFoundError } = require("../errors");
 
 const getOneImg = async (req, res) => {
   const {

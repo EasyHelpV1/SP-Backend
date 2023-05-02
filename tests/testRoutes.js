@@ -1,5 +1,6 @@
 /*jshint esversion: 8*/
-require("dotenv").config({ path: `.env.test` });
+// require("dotenv").config({ path: `.env.test` });
+require("dotenv").config();
 const chai = require("chai");
 const expect = chai.expect;
 const should = chai.should();
@@ -35,7 +36,12 @@ const newUserDetails = {
 const newPost = {
   createdBy: String(userId),
   title: "testPostTitle",
-  content: "test post content",
+  content: "test post content test post content test post content",
+  urgency: true,
+  time: "2hr",
+  location: "here",
+  money: "paid",
+  date: new Date("2021-11-21"),
 };
 const newPostDetails = {
   title: "editTitle",
@@ -49,9 +55,9 @@ beforeEach((done) => {
     .set("Content-Type", "application/json")
     .send(defaultUser)
     .end((err, res) => {
+      res.should.have.status(200);
       token = res.body.token;
       userId = res.body.user._id;
-      res.should.have.status(200);
       done();
     });
 });
@@ -80,7 +86,6 @@ describe("Test Authentication", () => {
       .set("Content-Type", "application/json")
       .send(defaultUser)
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         res.body.should.be.a("object");
         const isThereToken = res.body.hasOwnProperty("token");
@@ -98,11 +103,9 @@ describe("Test Authentication", () => {
       .set("Content-Type", "application/json")
       .send(registerUserInfo)
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(201);
         res.body.should.be.a("object");
         testUserId = res.body.user._id;
-        console.log("userId", testUserId);
         const isThereToken = res.body.hasOwnProperty("token");
         expect(isThereToken).to.be.equal(true);
         done();
@@ -118,7 +121,6 @@ describe("Test User", () => {
       .get("/api/v1/users")
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         res.body.should.be.a("array");
         done();
@@ -131,7 +133,6 @@ describe("Test User", () => {
       .get(`/api/v1/users/${testUserId}`)
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         res.should.be.a("object");
         done();
@@ -145,7 +146,6 @@ describe("Test User", () => {
       .set({ Authorization: `Bearer ${token}` })
       .send(newUserDetails)
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         res.body.should.be.a("object");
         done();
@@ -161,7 +161,6 @@ describe("Test User", () => {
       .delete(`/api/v1/users/${testUserId}`)
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(202);
         done();
       });
@@ -177,7 +176,6 @@ describe("Test Posts", () => {
       .get("/api/v1/posts")
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         res.body.should.be.a("array");
         done();
@@ -192,11 +190,9 @@ describe("Test Posts", () => {
       .set({ Authorization: `Bearer ${token}` })
       .send(newPost)
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(201);
         res.body.should.be.a("object");
         postId = res.body.post._id;
-        console.log(res.body);
         done();
       });
   });
@@ -208,7 +204,6 @@ describe("Test Posts", () => {
       .get(`/api/v1/posts/${postId}`)
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         res.should.be.a("object");
         done();
@@ -223,7 +218,6 @@ describe("Test Posts", () => {
       .set({ Authorization: `Bearer ${token}` })
       .send(newPostDetails)
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(200);
         res.body.should.be.a("object");
         done();
@@ -237,7 +231,6 @@ describe("Test Posts", () => {
       .delete(`/api/v1/posts/${postId}`)
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
-        console.log(res.body);
         res.should.have.status(202);
         done();
       });
