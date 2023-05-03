@@ -1,6 +1,12 @@
 /* jshint esversion: 8 */
 /* jshint node: true */
 
+// docs imports
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocs = YAML.load("./swagger.yaml");
+
+// imports
 require("dotenv").config({ path: `.env` });
 require("express-async-errors");
 const cors = require("cors");
@@ -9,25 +15,11 @@ const express = require("express");
 const socketio = require("socket.io");
 var bodyParser = require("body-parser");
 
-// for io
-
 // start express app
 const app = express();
 
 // wrap with http server
 const server = http.createServer(app);
-
-// // initialize socketio
-// const io = new socketio.Server(server, {
-//   pingTimeout: 60000,
-//   cors: cors({
-//     origin: "*",
-//   }),
-// });
-
-// io.on("connection", (socket) => {
-//   console.log("connected to socket.io ");
-// });
 
 //connect to db
 const db = require("./db/connect");
@@ -45,6 +37,10 @@ const commentRouter = require("./routes/comment");
 const replyRouter = require("./routes/reply");
 const adminRouter = require("./routes/admin");
 
+// error handler
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
+
 //middleware
 app.use(
   cors({
@@ -55,15 +51,15 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// error handler
-const notFoundMiddleware = require("./middleware/not-found");
-const errorHandlerMiddleware = require("./middleware/error-handler");
-
-//docs?
+//docs
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 //routes
 app.get("/api/v1", (req, res) => {
-  return res.send("Welcome home :)");
+  // return res.send("Welcome home :)");
+  return res.send(
+    '<h1>Welcome to Easy Help API</h1><p><a href="/api-docs">Explore API Documentation</p></a>'
+  );
 });
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", authUser, usersRouter);

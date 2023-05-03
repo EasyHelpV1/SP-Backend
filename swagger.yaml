@@ -1,0 +1,597 @@
+openapi: 3.0.0
+info:
+  title: sp-api
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://sp-backend-b70z.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/confirm/{email}/{token}:
+    get:
+      tags:
+        - Misc
+      summary: confirm
+      operationId: confirm
+      parameters:
+        - name: email
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+        - name: token
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/ResetUserPassword:
+    patch:
+      tags:
+        - Misc
+      summary: admin/ResetUserPassword
+      operationId: admin/ResetUserPassword
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "{ \n    \"email\":\"anatest@gmail.com\", \n    \"birthDate\"::\"2015-02-11\", \n    \"password\" :\"Password1!\"\n}"
+            example: "{ \n    \"email\":\"anatest@gmail.com\", \n    \"birthDate\"::\"2015-02-11\", \n    \"password\" :\"Password1!\"\n}"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/DeletePost:
+    delete:
+      tags:
+        - Misc
+      summary: admin/DeletePost
+      operationId: admin/DeletePost
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/FindUser/{email}:
+    get:
+      tags:
+        - Misc
+      summary: admin/FindUser
+      operationId: admin/FindUser
+      parameters:
+        - name: email
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/EditUser/{email}:
+    patch:
+      tags:
+        - Misc
+      summary: admin/EditUser
+      operationId: admin/EditUser
+      parameters:
+        - name: email
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/adminEditUserRequest"
+                - example:
+                    firstN: new
+            example:
+              firstN: new
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/AddAdmin/{email}:
+    patch:
+      tags:
+        - Misc
+      summary: admin/AddAdmin
+      operationId: admin/AddAdmin
+      parameters:
+        - name: email
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /admin/RemoveAdmin/{email}:
+    patch:
+      tags:
+        - Misc
+      summary: admin/RemoveAdmin
+      operationId: admin/RemoveAdmin
+      parameters:
+        - name: email
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /comment/{id}:
+    get:
+      tags:
+        - Misc
+      summary: getComment
+      operationId: getComment
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /imgs:
+    post:
+      tags:
+        - Misc
+      summary: uploadImg
+      operationId: uploadImg
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /imgs/{id}:
+    get:
+      tags:
+        - Misc
+      summary: getImg
+      operationId: getImg
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Misc
+      summary: deleteImg
+      operationId: deleteImg
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Misc
+      summary: changeImg
+      operationId: changeImg
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /posts:
+    get:
+      tags:
+        - Misc
+      summary: getAllPosts
+      operationId: getAllPosts
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Misc
+      summary: createPost
+      operationId: createPost
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /posts/{id}:
+    get:
+      tags:
+        - Misc
+      summary: getOnePost
+      operationId: getOnePost
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Misc
+      summary: editPost
+      operationId: editPost
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Misc
+      summary: deletePost
+      operationId: deletePost
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /reply/{id}:
+    get:
+      tags:
+        - Misc
+      summary: getReply
+      operationId: getReply
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Misc
+      summary: editReply
+      operationId: editReply
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /users:
+    get:
+      tags:
+        - Misc
+      summary: getAllUsers
+      operationId: getAllUsers
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /users/{id}:
+    get:
+      tags:
+        - Misc
+      summary: getOneUser
+      operationId: getOneUser
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Misc
+      summary: editUser
+      operationId: editUser
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /changePassword/{id}:
+    patch:
+      tags:
+        - Misc
+      summary: changePassword
+      operationId: changePassword
+      parameters:
+        - name: id
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: "null"
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /:
+    get:
+      tags:
+        - Auth
+      summary: home
+      operationId: home
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: register
+      operationId: register
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/registerrequest"
+                - example:
+                    firstN: Ana
+                    lastN: Test
+                    birthDate: 2015-02-11
+                    email: anatest@gmail.com
+                    password: Password1!
+            example:
+              firstN: Ana
+              lastN: Test
+              birthDate: 2015-02-11
+              email: anatest@gmail.com
+              password: Password1!
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: login
+      operationId: login
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/loginrequest"
+                - example:
+                    email: abc@gmail.com
+                    password: Password1!
+            example:
+              email: abc@gmail.com
+              password: Password1!
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    registerrequest:
+      title: registerrequest
+      required:
+        - firstN
+        - lastN
+        - birthDate
+        - email
+        - password
+      type: object
+      properties:
+        firstN:
+          type: string
+        lastN:
+          type: string
+        birthDate:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        firstN: Ana
+        lastN: Test
+        birthDate: 2015-02-11
+        email: anatest@gmail.com
+        password: Password1!
+    loginrequest:
+      title: loginrequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: abc@gmail.com
+        password: Password1!
+    adminDeletePostRequest:
+      title: adminDeletePostRequest
+      required:
+        - postTitle
+        - createdBy
+        - content
+      type: object
+      properties:
+        postTitle:
+          type: string
+        createdBy:
+          type: string
+        content:
+          type: string
+      example:
+        postTitle: title
+        createdBy: person
+        content: content
+    adminEditUserRequest:
+      title: adminEditUserRequest
+      required:
+        - firstN
+      type: object
+      properties:
+        firstN:
+          type: string
+      example:
+        firstN: new
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Misc
+    description: ""
+  - name: Auth
+    description: ""

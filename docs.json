@@ -1,0 +1,627 @@
+{
+	"info": {
+		"_postman_id": "2a2a0325-255a-4d06-b5b5-a2f7f667d71a",
+		"name": "sp-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21851818"
+	},
+	"item": [
+		{
+			"name": "home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}",
+					"host": [
+						"{{SP_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstN\":\"Ana\",\n    \"lastN\":\"Test\",\n    \"birthDate\":\"2015-02-11\",\n    \"email\":\"anatest@gmail.com\",\n    \"password\":\"Password1!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SP_URL}}/auth/register",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"abc@gmail.com\",\n    \"password\":\"Password1!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SP_URL}}/auth/login",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "confirm",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/auth/confirm/:email/:token",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"auth",
+						"confirm",
+						":email",
+						":token"
+					],
+					"variable": [
+						{
+							"key": "email",
+							"value": null
+						},
+						{
+							"key": "token",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/ResetUserPassword",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"email\":\"anatest@gmail.com\", \n    \"birthDate\"::\"2015-02-11\", \n    \"password\" :\"Password1!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SP_URL}}/admin/ResetUserPassword",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"admin",
+						"ResetUserPassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/DeletePost",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"postTitle\":\"title\", \n    \"createdBy\":\"person\", \n    \"content\":\"content\"} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SP_URL}}/admin/DeletePost",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"admin",
+						"DeletePost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/FindUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/admin/FindUser/:email",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"admin",
+						"FindUser",
+						":email"
+					],
+					"variable": [
+						{
+							"key": "email",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/EditUser",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstN\":\"new\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SP_URL}}/admin/EditUser/:email",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"admin",
+						"EditUser",
+						":email"
+					],
+					"variable": [
+						{
+							"key": "email",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/AddAdmin",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/admin/AddAdmin/:email",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"admin",
+						"AddAdmin",
+						":email"
+					],
+					"variable": [
+						{
+							"key": "email",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin/RemoveAdmin",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/admin/RemoveAdmin/:email",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"admin",
+						"RemoveAdmin",
+						":email"
+					],
+					"variable": [
+						{
+							"key": "email",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getComment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/comment/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"comment",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uploadImg",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/imgs",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"imgs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getImg",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/imgs/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"imgs",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteImg",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/imgs/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"imgs",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "changeImg",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/imgs/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"imgs",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllPosts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/posts",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/posts",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOnePost",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/posts/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editPost",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/posts/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletePost",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/posts/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getReply",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/reply/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"reply",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editReply",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/reply/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"reply",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/users",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOneUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/users/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editUser",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/users/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "changePassword",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{SP_URL}}/changePassword/:id",
+					"host": [
+						"{{SP_URL}}"
+					],
+					"path": [
+						"changePassword",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
